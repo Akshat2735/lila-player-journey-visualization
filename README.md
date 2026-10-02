@@ -2,6 +2,8 @@
 
 A gameplay telemetry visualization tool for LILA Games' Level Design use case. It turns the supplied player telemetry into an interactive minimap view of player journeys, human and bot activity, gameplay events, heatmaps, and match playback.
 
+**Live Demo:** [https://lila-player-journey-visualization-ebon.vercel.app](https://lila-player-journey-visualization-ebon.vercel.app)
+
 ## The problem
 
 Raw gameplay telemetry contains useful information about movement and events, but is difficult to interpret as rows of data. This tool places recorded activity on the game minimap so Level Designers can explore it in match context.
