@@ -18,6 +18,14 @@ Raw gameplay telemetry contains useful information about movement and events, bu
 - Player-traffic, kill-location, and death-location heatmaps, each independently toggleable
 - Match and player details, event counts, loading and retry states, empty-result messaging, and reset controls
 
+## Walkthrough
+
+1. Choose a map, date, and match from **Explore Data**. The match list updates for the selected map and date.
+2. Read the minimap paths: solid teal shows humans and dashed violet shows bots. Toggle event layers to inspect kills, deaths, loot, or storm deaths; hover over recorded activity for details.
+3. Use **Match Replay** to play or pause, change speed, drag the timeline, or restart. Paths and event markers follow the match playhead.
+4. Toggle player traffic, kill locations, and death locations independently. Choose whether heatmaps summarize this match or all matches in the current map/date selection.
+5. Use **Reset view** to restore map layers and **Reset filters** to return to the default map, date, and match.
+
 ## Why it is useful
 
 The map-led view helps designers investigate where recorded movement and combat events occur, how paths vary between matches or maps, and which areas may merit a closer look for traffic or underuse. The telemetry shows where recorded activity occurred; it does not establish why players chose a route or area.
@@ -60,7 +68,6 @@ In the provided snapshot, the busiest 96×96 traffic cell on each map contains a
 
 - Landmark-level minimap alignment has not been independently verified against known in-game coordinates.
 - The supplied timestamp unit is unresolved. Playback uses ordering and relative progress, and displays raw timestamp units where applicable; date filtering uses the source-folder partitions.
-- Deployment to a named host has not been completed or verified.
 
 ## Run locally
 
@@ -103,7 +110,7 @@ npm run build
 npm run preview
 ```
 
-The static site is written to `dist/` and can be deployed to a root-path static host. No application server or database is required at runtime. A named-host deployment has not yet been verified.
+The static site is written to `dist/` and is deployed to [Vercel](https://lila-player-journey-visualization-ebon.vercel.app/). It is served from the domain root; no application server or database is required at runtime.
 
 ## Project structure
 

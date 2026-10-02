@@ -2,7 +2,7 @@
 
 ## Product shape
 
-Build a static browser application for exploring the supplied LILA BLACK telemetry. Use React and TypeScript for the interface, Vite for the build, a small Python/PyArrow preprocessing script for Parquet, and Canvas 2D for map overlays. Vercel is the intended static host, but deployment has not been completed or verified. There is no runtime API or database: the raw input has 89,104 rows; preprocessing removes one byte-identical 88-row file copy, leaving 89,016 rows across 1,242 canonical journeys for the browser.
+Build a static browser application for exploring the supplied LILA BLACK telemetry. Use React and TypeScript for the interface, Vite for the build, a small Python/PyArrow preprocessing script for Parquet, and Canvas 2D for map overlays. The public Vercel deployment is available at [lila-player-journey-visualization-ebon.vercel.app](https://lila-player-journey-visualization-ebon.vercel.app/). There is no runtime API or database: the raw input has 89,104 rows; preprocessing removes one byte-identical 88-row file copy, leaving 89,016 rows across 1,242 canonical journeys for the browser.
 
 This keeps deployment and operations simple while preserving a reproducible data pipeline. The interface loads only the selected minimap and relevant data shards, then caches them in memory for responsive filtering and playback.
 
@@ -15,7 +15,7 @@ This keeps deployment and operations simple while preserving a reproducible data
 | Parquet ingestion | Python + PyArrow, build-time only | Reads the extensionless `.nakama-0` files directly and handles their shared Parquet schema, Snappy pages, and dictionary encodings. |
 | Map and overlays | HTML image + Canvas 2D overlay | Keeps map image scaling crisp and draws many paths/markers without creating tens of thousands of DOM nodes. |
 | Heatmaps | Preprocessed or in-browser normalized UV grid + Canvas | Simple to implement for this dataset size; no map-tile service or visualization framework is needed. |
-| Hosting | Root-path static hosting (Vercel intended) | Serves the compiled app, minimaps, manifest, and JSON shards without a server process or runtime data store. Host deployment remains unverified. |
+| Hosting | Vercel static hosting | Serves the compiled app, minimaps, manifest, and JSON shards without a server process or runtime data store. Production deployment is verified; GitHub automatic deployment is not connected. |
 
 ## Frontend architecture
 
@@ -135,7 +135,7 @@ The Parquet schema marks `ts` as milliseconds, but stored values look like Unix 
 
 ## Deployment approach
 
-The intended deployment is a static site on Vercel (or another root-path static host). The verified local production command is `npm run build`; it publishes the app, manifest, map/date JSON shards, and minimap files under `dist/`. There is no runtime server, database, or secret configuration. The current source has not been deployed to a named host, so platform-specific routing, cache headers, and a public URL remain unverified. Regenerate data locally with the PyArrow preprocessor when source data changes; the static host does not need Python. Confirm that generated assets exist before publishing. The README documents local setup, regeneration, and root-path hosting assumptions; add the live URL after an actual deployment.
+The application is deployed as a public static site at [lila-player-journey-visualization-ebon.vercel.app](https://lila-player-journey-visualization-ebon.vercel.app/). `vercel.json` selects the Vite framework, runs `npm ci` and `npm run build`, and serves `dist/`; Vite's root base path is `/`. The production page, manifest, data shards, and minimaps were checked after deployment. `.vercelignore` excludes the local raw `player_data/` directory and generated or private files from CLI deployment uploads. There is no runtime server, database, or Python requirement. The Vercel project is not connected to GitHub for automatic deployment, so future changes need a manual deploy unless that integration is enabled. Regenerate processed data locally with the PyArrow preprocessor when source data changes and include the updated `public/data/` and `public/maps/` assets before deploying.
 
 ## Assumptions and trade-offs
 
@@ -154,4 +154,4 @@ The intended deployment is a static site on Vercel (or another root-path static 
 2. **Map and filters:** the React/Vite interface renders all three minimaps, Canvas paths, human/bot styles, event markers, and map/date/match selectors.
 3. **Playback:** match-wide raw timestamp ordering drives the timeline, play/pause, seeking, playback speed, and current player/event visibility.
 4. **Heatmaps and UX:** traffic/kill/death bins, legends, loading/error/empty states, and responsive controls are implemented.
-5. **Handoff:** README, dataset analysis, architecture, and insights documents are present; the local static production build is verified. Deployment to a named host remains outstanding.
+5. **Handoff:** README walkthrough, dataset analysis, architecture, and evidence-backed insights are present. The GitHub repository and public Vercel deployment are available, and the core production flows were browser-tested against the supplied data.
