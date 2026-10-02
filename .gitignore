@@ -1,0 +1,24 @@
+# Dependencies and generated build output
+node_modules/
+dist/
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Local environment and logs
+.env
+.env.*
+*.log
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
